@@ -6,6 +6,83 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Character {
+  id              String        @id
+  stats           Stats?
+  currency        Currency?
+  activebuffs     ActiveBuffs?
+  inventory       Inventory?
+  equipment       Equipment?
+}
+
+model Stats {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  totalLevel      Int           @default(0)
+  exp             BigInt        @default(0)
+  atkLevel        Int           @default(0)
+  defLevel        Int           @default(0)
+  highestClear    Int           @default(0)
+  numKills        Int           @default(0)
+  numRolls        Int           @default(0)
+}
+
+model Currency {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  balance         Int           @default(0)
+}
+
+model ActiveBuffs {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  buffs           Buffs[]
+}
+
+model Inventory {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  items           Item[]
+}
+
+model Equipment {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  weapons         Weapons[]
+  head            String
+  neck            String
+  chest           String
+  legs            String
+  feet            String
+  hands           String
+  cape            String
+}
+
+model Buffs {
+  buffName        Int           @id @default(autoincrement())
+  activeBuffsId   Int           @unique
+  activeBuffs     ActiveBuffs   @relation(fields: [activeBuffsId], references: id)
+}
+
+model Item {
+  id              Int           @id @default(autoincrement())
+  itemName        String        @unique
+  inventoryId     Int           @unique
+  inventory       Inventory     @relation(fields: [inventoryId], references: id)
+}
+
+model Weapons {
+  id              Int           @id @default(autoincrement())
+  itemName        String        @unique
+  equipmentId     Int           @unique
+  equipment       Equipment     @relation(fields: [equipmentId], references: id)
 }
