@@ -1,10 +1,9 @@
-import "./utils/dotenv";
 import { Client, ClientOptions, Intents } from "discord.js";
 import { performance } from "perf_hooks";
 import config from "./config.json";
 import { events } from "./events";
-import { startFlaskRoutine } from "./routines/flask";
-import { startWordleRoutine } from "./routines/wordle";
+//import { startFlaskRoutine } from "./routines/flask";
+//import { startWordleRoutine } from "./routines/wordle";
 import { log, logError } from "./utils/logger";
 
 const startTime = performance.now();
@@ -22,7 +21,7 @@ const clientOptions: ClientOptions = {
     activities: [
       {
         name: config.status,
-        type: "LISTENING",
+        type: "WATCHING",
       },
     ],
   },
@@ -44,8 +43,8 @@ function startEventListeners() {
 }
 
 function startRoutines() {
-  startFlaskRoutine();
-  startWordleRoutine();
+  //startFlaskRoutine();
+  //startWordleRoutine();
   log("Started routines.");
 }
 

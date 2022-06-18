@@ -1,36 +1,17 @@
 {
-  "status": "your conversations 👁️👁️",
+  "status": "you climb",
   "text": {
     "error": {
-      "admin": "i dont think youre allowed to do that",
-      "dialogflow": "err0r 4o4",
-      "channel": "cant do this here, ask me in a channel",
-      "exists": "already exists doofus",
-      "internal": "didnt work sorry",
-      "not_found": "sorry i dont know that command",
-      "role": "i couldnt find that role sorry"
+      "admin": "invalid permissions",
+      "channel": "join a channel to execute this command",
+      "exists": "already exists",
+      "internal": "internal error",
+      "not_found": "invalid command, either a typo or it doesn't exist",
+      "role": "role not found"
     },
     "chat": "@ me in this thread to chat",
-    "success": ["done", "its done", "all done"],
-    "flask": [
-      "eat potassium homie",
-      "wake up babe, its time for your pill",
-      "pill time! also dont forget to get a refill if you need it",
-      "potassium",
-      "eat potassium, and dont forget refill pls"
-    ],
-    "wordle": [
-      [":sunglasses:", "lets gooo"],
-      [":sunglasses:", "im god dont @ me"],
-      ["", ":)", "ezpz", "too good for this wordle"],
-      ["", ":thinking:", "not bad", "lol", "another day another wordle"],
-      [":cold_sweat:", "phew", "tough one today", "rip", "lmaoo"],
-      [
-        ":face_with_symbols_over_mouth:",
-        ":skull:",
-        ":coffin:",
-        "wtf was that word"
-      ]
+    "success": [
+      "done"
     ]
   }
 }

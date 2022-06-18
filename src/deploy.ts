@@ -1,12 +1,11 @@
-import "./utils/dotenv";
 import axios from "axios";
 import {
   APIApplicationCommandPermission,
   RESTPutAPIApplicationCommandsJSONBody,
   RESTPutAPIApplicationCommandsResult,
   RESTPutAPIGuildApplicationCommandsPermissionsJSONBody,
-  Routes,
-} from "discord-api-types/v9";
+  Routes
+} from "discord-api-types/v10";
 import { performance } from "perf_hooks";
 import { commands } from "./commands";
 import { log } from "./utils/logger";
@@ -31,7 +30,6 @@ export async function deployCommands() {
       commandPerms.set(commandName, command.permissions);
       commandInfosBody.push({
         ...command.commandInfo,
-        default_permission: false,
       });
     } else if ("commandInfo" in command) {
       commandInfosBody.push(command.commandInfo);
@@ -52,7 +50,6 @@ export async function deployCommands() {
   if (commandPerms.size < 1) {
     return;
   }
-
   // Use returned command info IDs to build command permissions info
   const commandPermsBody: RESTPutAPIGuildApplicationCommandsPermissionsJSONBody =
     [...commandPerms].map(([commandName, commandPerm]) => ({

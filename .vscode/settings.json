@@ -16,7 +16,7 @@
     "**/node_modules": true
   },
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false
+    "source.organizeImports": true
   },
   "typescript.preferences.importModuleSpecifier": "relative"
 }
