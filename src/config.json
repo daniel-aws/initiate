@@ -1,5 +1,6 @@
 {
   "status": "you climb",
+  "messageChannelID": "225091415946952704",
   "text": {
     "error": {
       "admin": "invalid permissions",

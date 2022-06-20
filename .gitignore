@@ -113,7 +113,9 @@ dist
 .yarn/build-state.yml
 .pnp.*
 
+# DB Files
 *.sqlite
+*.sql
 
 # Migrations for prisma
 prisma/migrations/

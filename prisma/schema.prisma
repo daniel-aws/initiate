@@ -17,6 +17,7 @@ model Character {
   activebuffs     ActiveBuffs?
   inventory       Inventory?
   equipment       Equipment?
+  adventureCD     Boolean
 }
 
 model Stats {

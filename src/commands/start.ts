@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { CommandInteraction } from "discord.js";
 import { SlashCommand } from ".";
-
-const prisma = new PrismaClient();
+import { prisma } from "../app";
 
 export const startCommand: SlashCommand = {
   // Description of command
@@ -39,6 +37,7 @@ export const startCommand: SlashCommand = {
       await prisma.character.create({
         data: {
           id: userID,
+          adventureCD: false,
           stats: {
             create: {
               id: 0,

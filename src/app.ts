@@ -1,10 +1,12 @@
+import { PrismaClient } from "@prisma/client";
 import { Client, ClientOptions, Intents } from "discord.js";
 import { performance } from "perf_hooks";
 import config from "./config.json";
 import { events } from "./events";
-//import { startFlaskRoutine } from "./routines/flask";
-//import { startWordleRoutine } from "./routines/wordle";
+import { startResetAdventureCDRoutine } from "./routines/adventureCooldown";
 import { log, logError } from "./utils/logger";
+
+const prisma = new PrismaClient();
 
 const startTime = performance.now();
 
@@ -43,8 +45,7 @@ function startEventListeners() {
 }
 
 function startRoutines() {
-  //startFlaskRoutine();
-  //startWordleRoutine();
+  startResetAdventureCDRoutine();
   log("Started routines.");
 }
 
@@ -61,4 +62,4 @@ client.once("ready", () => {
 
 client.login(process.env.DISCORD_TOKEN);
 
-export { client };
+export { client, prisma };
