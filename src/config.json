@@ -1,6 +1,5 @@
 {
   "status": "you climb",
-  "messageChannelID": "225091415946952704",
   "text": {
     "error": {
       "admin": "invalid permissions",
@@ -10,7 +9,6 @@
       "not_found": "invalid command, either a typo or it doesn't exist",
       "role": "role not found"
     },
-    "chat": "@ me in this thread to chat",
     "success": [
       "done"
     ]

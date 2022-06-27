@@ -1,0 +1,17 @@
+ {
+    "common" : [
+        {
+            "name" : "Dull Sword",
+            "description" : "A pretty dull sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "uncommon" : [],
+    "rare" : [],
+    "epic" : [],
+    "mythic" : [],
+    "legendary" : [],
+    "godtier" : []
+ }
