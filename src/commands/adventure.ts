@@ -1,7 +1,8 @@
 import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
-import { prisma } from "../app";
+import { prisma, prismaReadOnly } from "../app";
 import { resetAdventureCDJob } from "../routines/adventureCooldown";
+import { randomNumBetweenRange } from "../utils/random";
 import { minDiffBetweenDates, secDiffBetweenDates } from "../utils/timeDiff";
 
 export const adventureCommand: SlashCommand = {
@@ -19,7 +20,7 @@ export const adventureCommand: SlashCommand = {
 
     // Check if command is on cooldown
     // Query DB if there is already a character entry with the same user ID
-    const characterData = await prisma.character.findUnique({
+    const characterData = await prismaReadOnly.character.findUnique({
       where: {
         id: userID,
       },
@@ -63,6 +64,23 @@ export const adventureCommand: SlashCommand = {
         }
       } else {
         // If not on cooldown, retrieve a random droptable/text
+
+        // Roll for high, med, or low events
+        const eventRoll = randomNumBetweenRange(1, 3);
+
+        switch (eventRoll) {
+          case 1:
+            console.log("High roll");
+            break;
+
+          case 2:
+            console.log("Med roll");
+            break;
+
+          case 3:
+            console.log("Low roll");
+            break;
+        }
 
         // Randomize and grab resulting items from droptable
 

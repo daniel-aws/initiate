@@ -7,6 +7,9 @@ import { startResetAdventureCDRoutine } from "./routines/adventureCooldown";
 import { log, logError } from "./utils/logger";
 
 const prisma = new PrismaClient();
+const prismaReadOnly = new PrismaClient({
+  datasources: { db: { url: process.env.DATABASE_READONLY_URL } },
+});
 
 const startTime = performance.now();
 
@@ -62,4 +65,4 @@ client.once("ready", () => {
 
 client.login(process.env.DISCORD_TOKEN);
 
-export { client, prisma };
+export { client, prisma, prismaReadOnly };

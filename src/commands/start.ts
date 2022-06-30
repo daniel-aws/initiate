@@ -1,6 +1,6 @@
 import { CommandInteraction } from "discord.js";
 import { SlashCommand } from ".";
-import { prisma } from "../app";
+import { prisma, prismaReadOnly } from "../app";
 
 export const startCommand: SlashCommand = {
   // Description of command
@@ -19,7 +19,7 @@ export const startCommand: SlashCommand = {
     const userID = interaction.user.id;
 
     // Query DB if there is already a character entry with the same user ID
-    const existingCharacter = await prisma.character.findMany({
+    const existingCharacter = await prismaReadOnly.character.findMany({
       where: {
         id: userID,
       },
