@@ -1,7 +1,9 @@
+import { Prisma } from "@prisma/client";
 import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
-import { prisma, prismaReadOnly } from "../app";
+import { prismaReadOnly } from "../app";
 import { resetAdventureCDJob } from "../routines/adventureCooldown";
+import { logError } from "../utils/logger";
 import { randomNumBetweenRange } from "../utils/random";
 import { minDiffBetweenDates, secDiffBetweenDates } from "../utils/timeDiff";
 
@@ -66,30 +68,40 @@ export const adventureCommand: SlashCommand = {
         // If not on cooldown, retrieve a random droptable/text
 
         // Roll for high, med, or low events
-        const eventRoll = randomNumBetweenRange(1, 3);
+        const eventRoll = randomNumBetweenRange(1, 20);
+        let tableVal = "";
 
-        switch (eventRoll) {
-          case 1:
-            console.log("High roll");
-            
-            break;
+        if (eventRoll == 20) {
+          console.log("High roll");
+          tableVal = "HighRollAdventures";
+        } else if (eventRoll == 1) {
+          console.log("Low roll");
+          tableVal = "LowRollAdventures";
+        } else {
+          console.log("Med roll");
+          tableVal = "MedRollAdventures";
+        }
 
-          case 2:
-            console.log("Med roll");
-            break;
-
-          case 3:
-            console.log("Low roll");
-            break;
+        if (tableVal == "" || undefined) {
+          logError("ERROR: Table value is empty");
+        } else {
+          const result: Object = await prismaReadOnly.$queryRaw(
+            Prisma.sql`SELECT * FROM ${tableVal} ORDER BY RAND() LIMIT 1`
+          );
+          if (result != undefined) {
+            console.log(JSON.stringify(result));
+            const jsonObj = JSON.parse(JSON.stringify(result))[0]["data"];
+            console.log("ROLL: " + jsonObj["text"]);
+          }
         }
 
         // Randomize and grab resulting items from droptable
 
         // set boolean for cooldown to true and give droptable items to character
-        await prisma.character.update({
+        /*await prisma.character.update({
           where: { id: userID },
           data: { adventureCD: true },
-        });
+        });*/
 
         // Reply with random text
         interaction.reply("GOING ON AN ADVENTURE!");

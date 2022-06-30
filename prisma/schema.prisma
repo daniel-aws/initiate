@@ -10,7 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Adventures {
+model HighRollAdventures {
+  id              Int           @id @default (autoincrement())
+  data            Json
+}
+
+model LowRollAdventures {
+  id              Int           @id @default (autoincrement())
+  data            Json
+}
+
+model MedRollAdventures {
   id              Int           @id @default (autoincrement())
   data            Json
 }
