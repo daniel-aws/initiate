@@ -1,0 +1,66 @@
+[{
+    "_comment" :  "Example adventure where player gets 1 item between sword, coins, and helmet with all default values.",
+    "text": "test!",
+    "lootTable": [
+        "sword",
+        "coins",
+        "helmet"
+    ]
+},
+{
+    "_comment" :  "Example adventure where player gets between 1 sword with high roll rarity, or random coins of the default amount.",
+    "text": "test2!",
+    "lootTable": [
+        {
+            "sword" : 
+            {
+                "rarity" : "high"
+            }
+        },
+        "coins" 
+    ]
+},
+{
+    "_comment" :  "Example adventure where player gets between 1 sword with overridden rarity, or random coins of the default amount.",
+    "text": "test3!",
+    "lootTable": [
+        {
+            "sword" : 
+            {
+                "rarity" : 
+                {
+                    "common" : 70.989,
+                    "uncommon" : 20,
+                    "rare" : 6,
+                    "epic" : 2,
+                    "mythic" : 1,
+                    "legendary" : 0.01,
+                    "godtier" : 0.001
+                }
+            }
+        },
+        "coins" 
+    ]
+},
+{
+    "text": "After an evening of drinking at the Tavern, liquid courage inspires you to go on an adventure. You travel to the local forest to fight monsters. Deep in the brush of the forest, a horde of spiders descend from the trees. Easy you think to yourself. The last spider drops from the *blow* of your *weapon* as you let out a victorious battle cry!",
+    "lootTable": [
+        "gold",
+        "buff_scrolls",
+        {
+            "weapon" : 
+            {
+                "rarity" : 
+                {
+                    "common" : 70.989,
+                    "uncommon" : 20,
+                    "rare" : 6,
+                    "epic" : 2,
+                    "mythic" : 1,
+                    "legendary" : 0.01,
+                    "godtier" : 0.001
+                }
+            }
+        }
+    ]
+}]

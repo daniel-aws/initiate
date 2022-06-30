@@ -71,6 +71,7 @@ export const adventureCommand: SlashCommand = {
         switch (eventRoll) {
           case 1:
             console.log("High roll");
+            
             break;
 
           case 2:
