@@ -1,5 +1,4 @@
 [{
-    "_comment" :  "Example adventure where player gets 1 item between sword, coins, and helmet with all default values.",
     "text": "test!",
     "lootTable": [
         "weapon",
@@ -8,7 +7,6 @@
     ]
 },
 {
-    "_comment" :  "Example adventure where player gets between 1 sword with overridden rarity, or random coins of the default amount.",
     "text": "test3!",
     "lootTable": [
         {

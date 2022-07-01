@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { CommandInteraction } from "discord.js";
 import { SlashCommand } from ".";
 import { prisma, prismaReadOnly } from "../app";
@@ -33,6 +34,9 @@ export const startCommand: SlashCommand = {
     } else {
       console.log("Adding character!");
 
+      // Create empty list for buffs and items
+      const emptyList = [] as Prisma.JsonArray;
+
       // Add new character to database
       await prisma.character.create({
         data: {
@@ -45,13 +49,19 @@ export const startCommand: SlashCommand = {
           },
           activebuffs: {
             create: {
-              buffs: JSON.parse(JSON.stringify({})),
+              buffs: emptyList,
             },
           },
           inventory: {
             create: {
               id: 0,
-              items: JSON.parse(JSON.stringify("[]")),
+              items: emptyList,
+            },
+          },
+          vault: {
+            create: {
+              id: 0,
+              items: emptyList,
             },
           },
           equipment: {

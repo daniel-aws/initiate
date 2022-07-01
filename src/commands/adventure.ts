@@ -98,153 +98,146 @@ export const adventureCommand: SlashCommand = {
             } else {
               adventureDataFile = "adventureMidRollData";
             }
+            // Retrieve adventure data
+            type dataObjectKey = keyof typeof data;
+            const adventureData = data[adventureDataFile as dataObjectKey];
+            if (adventureData != undefined) {
+              const result = randomItemInObject(adventureData);
+              // Grab random item from the drop table
+              let item = randomItemInObject(
+                result["lootTable" as dataObjectKey]
+              );
 
-            if (adventureDataFile == undefined) {
-              logError("ERROR: Adventure data file value is empty");
-            } else {
-              // Retrieve adventure data
-              type dataObjectKey = keyof typeof data;
-              const adventureData = data[adventureDataFile as dataObjectKey];
-              if (adventureData != undefined) {
-                const result = randomItemInObject(adventureData);
-                // Grab random item from the drop table
-                let item = randomItemInObject(
-                  result["lootTable" as dataObjectKey]
+              let itemAmount = 1;
+              let itemName;
+              let values = [];
+              let foundGold = false;
+              values = inventoryItems;
+              // If coins, grab random num coins
+              if (item == "gold") {
+                itemAmount = randomNumBetweenRange(
+                  droptable.coinMin,
+                  droptable.coinMax
                 );
-
-                let itemAmount = 1;
-                let itemName;
-                let values = [];
-                let foundGold = false;
-                values = inventoryItems;
-                // If coins, grab random num coins
-                if (item == "gold") {
-                  itemAmount = randomNumBetweenRange(
-                    droptable.coinMin,
-                    droptable.coinMax
-                  );
-                  itemName = item;
-                  for (let i = 0; i < values.length; i++) {
-                    if (values[i].Name == "gold") {
-                      values[i].Amount += itemAmount;
-                      foundGold = true;
-                      break;
-                    }
+                itemName = item;
+                for (let i = 0; i < values.length; i++) {
+                  if (values[i].Name == "gold") {
+                    values[i].Amount += itemAmount;
+                    foundGold = true;
+                    break;
                   }
+                }
+              } else {
+                let itemRarity;
+                let itemRarityTable: any;
+                // Else if rarity distribution is overridden, use that
+                if (typeof item == "object") {
+                  const itemKeys = Object.keys(item);
+                  if (itemKeys.length != 1) {
+                    logError(
+                      "ERROR: ITEM ENTRY IS INVALID, MULTIPLE/NO ITEM NAMES DETECTED"
+                    );
+                  }
+                  itemRarityTable =
+                    item[itemKeys[0] as dataObjectKey][
+                      "rarity" as dataObjectKey
+                    ];
+                  item = itemKeys[0];
+                }
+                if (typeof item != "string") {
+                  logError("ERROR: Item category should be a string");
                 } else {
-                  let itemRarity;
-                  let itemRarityTable: any;
-                  // Else if rarity distribution is overridden, use that
-                  if (typeof item == "object") {
-                    const itemKeys = Object.keys(item);
-                    if (itemKeys.length != 1) {
-                      logError(
-                        "ERROR: ITEM ENTRY IS INVALID, MULTIPLE/NO ITEM NAMES DETECTED"
-                      );
-                    }
+                  // Otherwise grab default rarity distribution
+                  if (item == "weapon" || item == "armor") {
+                    type defaultEquipDropsKey =
+                      keyof typeof droptable.defaultEquipDrops;
                     itemRarityTable =
-                      item[itemKeys[0] as dataObjectKey][
-                        "rarity" as dataObjectKey
+                      droptable.defaultEquipDrops[
+                        adventureDataFile as defaultEquipDropsKey
                       ];
-                    item = itemKeys[0];
+                  } else if (item == "buff_scroll" || item == "potion") {
+                    type defaultItemDropsKey =
+                      keyof typeof droptable.defaultItemDrops;
+                    itemRarityTable =
+                      droptable.defaultEquipDrops[
+                        adventureDataFile as defaultItemDropsKey
+                      ];
                   }
-                  if (typeof item != "string") {
-                    logError("ERROR: Item category should be a string");
-                  } else {
-                    // Otherwise grab default rarity distribution
-                    if (item == "weapon" || item == "armor") {
-                      type defaultEquipDropsKey =
-                        keyof typeof droptable.defaultEquipDrops;
-                      itemRarityTable =
-                        droptable.defaultEquipDrops[
-                          adventureDataFile as defaultEquipDropsKey
-                        ];
-                    } else if (item == "buff_scroll" || item == "potion") {
-                      type defaultItemDropsKey =
-                        keyof typeof droptable.defaultItemDrops;
-                      itemRarityTable =
-                        droptable.defaultEquipDrops[
-                          adventureDataFile as defaultItemDropsKey
-                        ];
-                    }
-                    // Roll within distribution to get random rarity
-                    const rarityTotal = JSON.parse(
-                      JSON.stringify(itemRarityTable["total" as dataObjectKey])
-                    );
-                    const rarityRoll = randomNumBetweenRange(1, rarityTotal);
+                  // Roll within distribution to get random rarity
+                  const rarityTotal = JSON.parse(
+                    JSON.stringify(itemRarityTable["total" as dataObjectKey])
+                  );
+                  const rarityRoll = randomNumBetweenRange(1, rarityTotal);
 
-                    // Roll within distribution to get random item from list based on rarity
-                    let place = 0;
-                    itemRarityTable = JSON.parse(
-                      JSON.stringify(itemRarityTable)
+                  // Roll within distribution to get random item from list based on rarity
+                  let place = 0;
+                  itemRarityTable = JSON.parse(JSON.stringify(itemRarityTable));
+                  const itemRarityTableKeys = Object.keys(itemRarityTable);
+                  for (let i = 0; i < itemRarityTableKeys.length; i++) {
+                    const itemRarityTablePlace = JSON.parse(
+                      JSON.stringify(
+                        itemRarityTable[itemRarityTableKeys[i] as dataObjectKey]
+                      )
                     );
-                    const itemRarityTableKeys = Object.keys(itemRarityTable);
-                    for (let i = 0; i < itemRarityTableKeys.length; i++) {
-                      const itemRarityTablePlace = JSON.parse(
-                        JSON.stringify(
-                          itemRarityTable[
-                            itemRarityTableKeys[i] as dataObjectKey
-                          ]
-                        )
-                      );
-                      if (
-                        typeof itemRarityTablePlace == "number" &&
-                        itemRarityTableKeys[i] != "total"
-                      ) {
-                        place += itemRarityTablePlace;
-                        const val = itemRarityTableKeys[i] as dataObjectKey;
-                        itemRarityTable[val] = place;
-                        if (itemRarityTable[val] >= rarityRoll) {
-                          itemRarity = itemRarityTableKeys[i];
-                          break;
-                        }
+                    if (
+                      typeof itemRarityTablePlace == "number" &&
+                      itemRarityTableKeys[i] != "total"
+                    ) {
+                      place += itemRarityTablePlace;
+                      const val = itemRarityTableKeys[i] as dataObjectKey;
+                      itemRarityTable[val] = place;
+                      if (itemRarityTable[val] >= rarityRoll) {
+                        itemRarity = itemRarityTableKeys[i];
+                        break;
                       }
                     }
-                    // Retrieve item
-                    const itemData = randomItemInObject(
-                      data[item][itemRarity as dataObjectKey]
-                    );
-                    itemName = itemData.name;
                   }
+                  // Retrieve item
+                  const itemData = randomItemInObject(
+                    data[item][itemRarity as dataObjectKey]
+                  );
+                  itemName = itemData.name;
                 }
-                if (!foundGold) {
-                  const itemObject = JSON.parse(JSON.stringify({}));
-                  itemObject.Name = itemName;
-                  itemObject.Amount = itemAmount;
-                  values.push(itemObject);
-                }
-                inventoryItems = values;
-                await prisma.inventory.update({
-                  where: { characterId: userID },
-                  data: { items: values },
-                });
+              }
+              if (!foundGold) {
+                const itemObject = JSON.parse(JSON.stringify({}));
+                itemObject.Name = itemName;
+                itemObject.Amount = itemAmount;
+                values.push(itemObject);
+              }
+              inventoryItems = values;
 
-                // Reply with random text
-                const adventureText = result["text" as dataObjectKey];
-                if (
-                  typeof adventureText == "string" &&
-                  itemAmount != undefined &&
-                  itemName != undefined
-                ) {
-                  // Give items to player in database
-                  log(
-                    "received ITEM: " + itemName + " AMOUNT: " + itemAmount,
-                    interaction.user.username
-                  );
+              // Submit to database
+              await prisma.inventory.update({
+                where: { characterId: userID },
+                data: { items: values },
+              });
 
-                  interaction.reply(
-                    adventureText +
-                      "\nReward: " +
-                      itemAmount +
-                      " " +
-                      itemName +
-                      "."
-                  );
-                } else {
-                  logError(
-                    "ERROR: ADVENTURE TEXT IS NOT A STRING OR ITEM NAME/AMOUNT IS UNDEFINED"
-                  );
-                }
+              // Reply with random text
+              const adventureText = result["text" as dataObjectKey];
+              if (
+                typeof adventureText == "string" &&
+                itemAmount != undefined &&
+                itemName != undefined
+              ) {
+                // Give items to player in database
+                log(
+                  "received ITEM: " + itemName + " AMOUNT: " + itemAmount,
+                  interaction.user.username
+                );
+
+                interaction.reply(
+                  adventureText +
+                    "\nReward: " +
+                    itemAmount +
+                    " " +
+                    itemName +
+                    "."
+                );
+              } else {
+                logError(
+                  "ERROR: ADVENTURE TEXT IS NOT A STRING OR ITEM NAME/AMOUNT IS UNDEFINED"
+                );
               }
             }
           }

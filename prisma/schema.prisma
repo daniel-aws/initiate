@@ -16,6 +16,7 @@ model Character {
   currency        Int           @default(0)
   activebuffs     ActiveBuffs?
   inventory       Inventory?
+  vault           Vault?
   equipment       Equipment?
   adventureCD     Boolean
 }
@@ -41,6 +42,13 @@ model ActiveBuffs {
 }
 
 model Inventory {
+  id              Int           @id @default(autoincrement())
+  characterId     String        @unique
+  character       Character?    @relation(fields: [characterId], references: id)
+  items           Json
+}
+
+model Vault {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
