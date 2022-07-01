@@ -3,7 +3,7 @@ import { SlashCommand } from ".";
 
 export const showInvCommand: SlashCommand = {
   commandInfo: {
-    name: "Show Inventory",
+    name: "inv",
     description: "Displays your current inventory slots",
   },
   executeSlashCommand: async (interaction: CommandInteraction) => {
@@ -13,7 +13,7 @@ export const showInvCommand: SlashCommand = {
 
 export const showInventoryCommand: SlashCommand = {
   commandInfo: {
-    name: "Show Inventory",
+    name: "inventory",
     description: "Displays your current inventory slots",
   },
   executeSlashCommand: async (interaction: CommandInteraction) => {
