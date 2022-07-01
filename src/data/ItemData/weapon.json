@@ -1,0 +1,65 @@
+{
+    "common" : [
+        {
+            "name" : "Common Sword",
+            "description" : "A pretty common sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "uncommon" : [
+        {
+            "name" : "Uncommon Sword",
+            "description" : "A pretty uncommon sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "rare" : [
+        {
+            "name" : "Rare Sword",
+            "description" : "A pretty rare sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "epic" : [
+        {
+            "name" : "Epic Sword",
+            "description" : "A pretty epic sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "mythic" : [
+        {
+            "name" : "Mythic Sword",
+            "description" : "A pretty mythic sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "legendary" : [
+        {
+            "name" : "Legendary Sword",
+            "description" : "A pretty legendary sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "godtier" : [
+        {
+            "name" : "Godtier Sword",
+            "description" : "A pretty godtier sword.",
+            "damage type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ]
+ }

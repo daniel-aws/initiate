@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Client, ClientOptions, Intents } from "discord.js";
 import { performance } from "perf_hooks";
 import config from "./config.json";
+import { loadData } from "./data/loadData";
 import { events } from "./events";
 import { startResetAdventureCDRoutine } from "./routines/adventureCooldown";
 import { log, logError } from "./utils/logger";
@@ -51,6 +52,13 @@ function startRoutines() {
   startResetAdventureCDRoutine();
   log("Started routines.");
 }
+
+function startLoadData() {
+  loadData();
+  log("Loaded data.");
+}
+
+startLoadData();
 
 startEventListeners();
 

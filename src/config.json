@@ -1,5 +1,64 @@
 {
   "status": "you climb",
+  "droptable": {
+    "coinMin": 50,
+    "coinMax": 100,
+    "defaultEquipDrops": {
+      "adventureHighRollData" : {
+        "total": 100,
+        "common" : 0,
+        "uncommon" : 24,
+        "rare" : 40,
+        "epic" : 20,
+        "mythic" : 10,
+        "legendary" : 5,
+        "godtier" : 1
+      },
+      "adventureMidRollData" : {
+        "total": 100000,
+        "common" : 58989,
+        "uncommon" : 25000,
+        "rare" : 10000,
+        "epic" : 5000,
+        "mythic" : 1000,
+        "legendary" : 10,
+        "godtier" : 1
+      },
+      "adventureLowRollData" : {
+        "total": 100,
+        "common" : 100,
+        "uncommon" : 0,
+        "rare" : 0,
+        "epic" : 0,
+        "mythic" : 0,
+        "legendary" : 0,
+        "godtier" : 0
+      }
+    },
+    "defaultItemDrops": {
+      "adventureHighRollData": {
+        "total": 100,
+        "common" : 10,
+        "uncommon" : 50,
+        "rare" : 30,
+        "epic" : 10
+      },
+      "adventureMidRollData": {
+        "total": 100,
+        "common" : 70,
+        "uncommon" : 24,
+        "rare" : 5,
+        "epic" : 1
+      },
+      "adventureLowRollData": {
+        "total": 100,
+        "common" : 100,
+        "uncommon" : 0,
+        "rare" : 0,
+        "epic" : 0
+      }
+    }
+  },
   "text": {
     "error": {
       "admin": "invalid permissions",

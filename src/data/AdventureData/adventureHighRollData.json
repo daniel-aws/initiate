@@ -2,22 +2,9 @@
     "_comment" :  "Example adventure where player gets 1 item between sword, coins, and helmet with all default values.",
     "text": "test!",
     "lootTable": [
-        "sword",
-        "coins",
-        "helmet"
-    ]
-},
-{
-    "_comment" :  "Example adventure where player gets between 1 sword with high roll rarity, or random coins of the default amount.",
-    "text": "test2!",
-    "lootTable": [
-        {
-            "sword" : 
-            {
-                "rarity" : "high"
-            }
-        },
-        "coins" 
+        "weapon",
+        "gold",
+        "armor"
     ]
 },
 {
@@ -25,40 +12,42 @@
     "text": "test3!",
     "lootTable": [
         {
-            "sword" : 
+            "weapon" : 
             {
                 "rarity" : 
                 {
-                    "common" : 70.989,
-                    "uncommon" : 20,
-                    "rare" : 6,
-                    "epic" : 2,
-                    "mythic" : 1,
-                    "legendary" : 0.01,
-                    "godtier" : 0.001
+                    "total" : 1000000,
+                    "common" : 70989,
+                    "uncommon" : 20000,
+                    "rare" : 6000,
+                    "epic" : 2000,
+                    "mythic" : 1000,
+                    "legendary" : 10,
+                    "godtier" : 1
                 }
             }
         },
-        "coins" 
+        "gold" 
     ]
 },
 {
     "text": "After an evening of drinking at the Tavern, liquid courage inspires you to go on an adventure. You travel to the local forest to fight monsters. Deep in the brush of the forest, a horde of spiders descend from the trees. Easy you think to yourself. The last spider drops from the *blow* of your *weapon* as you let out a victorious battle cry!",
     "lootTable": [
         "gold",
-        "buff_scrolls",
+        "buff_scroll",
         {
             "weapon" : 
             {
                 "rarity" : 
                 {
-                    "common" : 70.989,
-                    "uncommon" : 20,
-                    "rare" : 6,
-                    "epic" : 2,
-                    "mythic" : 1,
-                    "legendary" : 0.01,
-                    "godtier" : 0.001
+                    "total" : 1000000,
+                    "common" : 70989,
+                    "uncommon" : 20000,
+                    "rare" : 6000,
+                    "epic" : 2000,
+                    "mythic" : 1000,
+                    "legendary" : 10,
+                    "godtier" : 1
                 }
             }
         }

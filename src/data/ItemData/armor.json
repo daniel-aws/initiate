@@ -1,0 +1,65 @@
+ {
+    "common" : [
+        {
+            "name" : "Common Helmet",
+            "description" : "A pretty common helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "uncommon" : [
+        {
+            "name" : "Uncommon Helmet",
+            "description" : "A pretty uncommon helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "rare" : [
+        {
+            "name" : "Rare Helmet",
+            "description" : "A pretty rare helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "epic" : [
+        {
+            "name" : "Epic Helmet",
+            "description" : "A pretty epic helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "mythic" : [
+        {
+            "name" : "Mythic Helmet",
+            "description" : "A pretty mythic helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "legendary" : [
+        {
+            "name" : "Legendary Helmet",
+            "description" : "A pretty legendary helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ],
+    "godtier" : [
+        {
+            "name" : "Godtier Helmet",
+            "description" : "A pretty godtier helmet.",
+            "resistance type" : "slash",
+            "boosts": [],
+            "effects": []
+        }
+    ]
+ }

@@ -1,0 +1,30 @@
+{
+    "common" : [
+        {
+            "name" : "Common Potion",
+            "description" : "A pretty common potion.",
+            "boosts": []
+        }
+    ],
+    "uncommon" : [
+        {
+            "name" : "Uncommon Potion",
+            "description" : "A pretty uncommon potion.",
+            "boosts": []
+        }
+    ],
+    "rare" : [
+        {
+            "name" : "Rare Potion",
+            "description" : "A pretty rare potion.",
+            "boosts": []
+        }
+    ],
+    "epic" : [
+        {
+            "name" : "Epic Potion",
+            "description" : "A pretty epic potion.",
+            "boosts": []
+        }
+    ]
+ }

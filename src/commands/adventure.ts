@@ -1,10 +1,11 @@
-import { Prisma } from "@prisma/client";
 import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
-import { prismaReadOnly } from "../app";
+import { prisma, prismaReadOnly } from "../app";
+import { droptable } from "../config.json";
+import { data } from "../data/loadData";
 import { resetAdventureCDJob } from "../routines/adventureCooldown";
-import { logError } from "../utils/logger";
-import { randomNumBetweenRange } from "../utils/random";
+import { log, logError } from "../utils/logger";
+import { randomItemInObject, randomNumBetweenRange } from "../utils/random";
 import { minDiffBetweenDates, secDiffBetweenDates } from "../utils/timeDiff";
 
 export const adventureCommand: SlashCommand = {
@@ -65,46 +66,189 @@ export const adventureCommand: SlashCommand = {
           }
         }
       } else {
-        // If not on cooldown, retrieve a random droptable/text
+        // Check if inventory is full and make sure there is one slot available
+        const inventoryData = await prismaReadOnly.inventory.findUnique({
+          where: {
+            characterId: userID,
+          },
+        });
+        if (inventoryData?.items != undefined) {
+          let inventoryItems = JSON.parse(JSON.stringify(inventoryData.items));
+          if (inventoryItems.length >= 20) {
+            interaction.reply(
+              "Your inventory is full. Please leave a slot open to get rewards from adventures."
+            );
+          } else {
+            // If not on cooldown, retrieve a random droptable/text
 
-        // Roll for high, med, or low events
-        const eventRoll = randomNumBetweenRange(1, 20);
-        let tableVal = "";
+            // set boolean for cooldown to true
+            await prisma.character.update({
+              where: { id: userID },
+              data: { adventureCD: true },
+            });
 
-        if (eventRoll == 20) {
-          console.log("High roll");
-          tableVal = "HighRollAdventures";
-        } else if (eventRoll == 1) {
-          console.log("Low roll");
-          tableVal = "LowRollAdventures";
-        } else {
-          console.log("Med roll");
-          tableVal = "MedRollAdventures";
-        }
+            // Roll for high, med, or low events
+            const eventRoll = randomNumBetweenRange(1, 20);
+            let adventureDataFile: string;
 
-        if (tableVal == "" || undefined) {
-          logError("ERROR: Table value is empty");
-        } else {
-          const result: Object = await prismaReadOnly.$queryRaw(
-            Prisma.sql`SELECT * FROM ${tableVal} ORDER BY RAND() LIMIT 1`
-          );
-          if (result != undefined) {
-            console.log(JSON.stringify(result));
-            const jsonObj = JSON.parse(JSON.stringify(result))[0]["data"];
-            console.log("ROLL: " + jsonObj["text"]);
+            if (eventRoll == 20) {
+              adventureDataFile = "adventureHighRollData";
+            } else if (eventRoll == 1) {
+              adventureDataFile = "adventureLowRollData";
+            } else {
+              adventureDataFile = "adventureMidRollData";
+            }
+
+            if (adventureDataFile == undefined) {
+              logError("ERROR: Adventure data file value is empty");
+            } else {
+              // Retrieve adventure data
+              type dataObjectKey = keyof typeof data;
+              const adventureData = data[adventureDataFile as dataObjectKey];
+              if (adventureData != undefined) {
+                const result = randomItemInObject(adventureData);
+                // Grab random item from the drop table
+                let item = randomItemInObject(
+                  result["lootTable" as dataObjectKey]
+                );
+
+                let itemAmount = 1;
+                let itemName;
+                let values = [];
+                let foundGold = false;
+                values = inventoryItems;
+                // If coins, grab random num coins
+                if (item == "gold") {
+                  itemAmount = randomNumBetweenRange(
+                    droptable.coinMin,
+                    droptable.coinMax
+                  );
+                  itemName = item;
+                  for (let i = 0; i < values.length; i++) {
+                    if (values[i].Name == "gold") {
+                      values[i].Amount += itemAmount;
+                      foundGold = true;
+                      break;
+                    }
+                  }
+                } else {
+                  let itemRarity;
+                  let itemRarityTable: any;
+                  // Else if rarity distribution is overridden, use that
+                  if (typeof item == "object") {
+                    const itemKeys = Object.keys(item);
+                    if (itemKeys.length != 1) {
+                      logError(
+                        "ERROR: ITEM ENTRY IS INVALID, MULTIPLE/NO ITEM NAMES DETECTED"
+                      );
+                    }
+                    itemRarityTable =
+                      item[itemKeys[0] as dataObjectKey][
+                        "rarity" as dataObjectKey
+                      ];
+                    item = itemKeys[0];
+                  }
+                  if (typeof item != "string") {
+                    logError("ERROR: Item category should be a string");
+                  } else {
+                    // Otherwise grab default rarity distribution
+                    if (item == "weapon" || item == "armor") {
+                      type defaultEquipDropsKey =
+                        keyof typeof droptable.defaultEquipDrops;
+                      itemRarityTable =
+                        droptable.defaultEquipDrops[
+                          adventureDataFile as defaultEquipDropsKey
+                        ];
+                    } else if (item == "buff_scroll" || item == "potion") {
+                      type defaultItemDropsKey =
+                        keyof typeof droptable.defaultItemDrops;
+                      itemRarityTable =
+                        droptable.defaultEquipDrops[
+                          adventureDataFile as defaultItemDropsKey
+                        ];
+                    }
+                    // Roll within distribution to get random rarity
+                    const rarityTotal = JSON.parse(
+                      JSON.stringify(itemRarityTable["total" as dataObjectKey])
+                    );
+                    const rarityRoll = randomNumBetweenRange(1, rarityTotal);
+
+                    // Roll within distribution to get random item from list based on rarity
+                    let place = 0;
+                    itemRarityTable = JSON.parse(
+                      JSON.stringify(itemRarityTable)
+                    );
+                    const itemRarityTableKeys = Object.keys(itemRarityTable);
+                    for (let i = 0; i < itemRarityTableKeys.length; i++) {
+                      const itemRarityTablePlace = JSON.parse(
+                        JSON.stringify(
+                          itemRarityTable[
+                            itemRarityTableKeys[i] as dataObjectKey
+                          ]
+                        )
+                      );
+                      if (
+                        typeof itemRarityTablePlace == "number" &&
+                        itemRarityTableKeys[i] != "total"
+                      ) {
+                        place += itemRarityTablePlace;
+                        const val = itemRarityTableKeys[i] as dataObjectKey;
+                        itemRarityTable[val] = place;
+                        if (itemRarityTable[val] >= rarityRoll) {
+                          itemRarity = itemRarityTableKeys[i];
+                          break;
+                        }
+                      }
+                    }
+                    // Retrieve item
+                    const itemData = randomItemInObject(
+                      data[item][itemRarity as dataObjectKey]
+                    );
+                    itemName = itemData.name;
+                  }
+                }
+                if (!foundGold) {
+                  const itemObject = JSON.parse(JSON.stringify({}));
+                  itemObject.Name = itemName;
+                  itemObject.Amount = itemAmount;
+                  values.push(itemObject);
+                }
+                inventoryItems = values;
+                await prisma.inventory.update({
+                  where: { characterId: userID },
+                  data: { items: values },
+                });
+
+                // Reply with random text
+                const adventureText = result["text" as dataObjectKey];
+                if (
+                  typeof adventureText == "string" &&
+                  itemAmount != undefined &&
+                  itemName != undefined
+                ) {
+                  // Give items to player in database
+                  log(
+                    "received ITEM: " + itemName + " AMOUNT: " + itemAmount,
+                    interaction.user.username
+                  );
+
+                  interaction.reply(
+                    adventureText +
+                      "\nReward: " +
+                      itemAmount +
+                      " " +
+                      itemName +
+                      "."
+                  );
+                } else {
+                  logError(
+                    "ERROR: ADVENTURE TEXT IS NOT A STRING OR ITEM NAME/AMOUNT IS UNDEFINED"
+                  );
+                }
+              }
+            }
           }
         }
-
-        // Randomize and grab resulting items from droptable
-
-        // set boolean for cooldown to true and give droptable items to character
-        /*await prisma.character.update({
-          where: { id: userID },
-          data: { adventureCD: true },
-        });*/
-
-        // Reply with random text
-        interaction.reply("GOING ON AN ADVENTURE!");
       }
     }
   },

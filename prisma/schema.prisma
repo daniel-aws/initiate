@@ -10,25 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model HighRollAdventures {
-  id              Int           @id @default (autoincrement())
-  data            Json
-}
-
-model LowRollAdventures {
-  id              Int           @id @default (autoincrement())
-  data            Json
-}
-
-model MedRollAdventures {
-  id              Int           @id @default (autoincrement())
-  data            Json
-}
-
 model Character {
   id              String        @id
   stats           Stats?
-  currency        Currency?
+  currency        Int           @default(0)
   activebuffs     ActiveBuffs?
   inventory       Inventory?
   equipment       Equipment?
@@ -48,32 +33,26 @@ model Stats {
   numRolls        Int           @default(0)
 }
 
-model Currency {
-  id              Int           @id @default(autoincrement())
-  characterId     String        @unique
-  character       Character?    @relation(fields: [characterId], references: id)
-  balance         Int           @default(0)
-}
-
 model ActiveBuffs {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
-  buffs           Buffs[]
+  buffs           Json
 }
 
 model Inventory {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
-  items           Item[]
+  items           Json
 }
 
 model Equipment {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
-  weapons         Weapons[]
+  weapon1         String
+  weapon2         String
   head            String
   neck            String
   chest           String
@@ -81,24 +60,4 @@ model Equipment {
   feet            String
   hands           String
   cape            String
-}
-
-model Buffs {
-  buffName        Int           @id @default(autoincrement())
-  activeBuffsId   Int           @unique
-  activeBuffs     ActiveBuffs   @relation(fields: [activeBuffsId], references: id)
-}
-
-model Item {
-  id              Int           @id @default(autoincrement())
-  itemName        String        @unique
-  inventoryId     Int           @unique
-  inventory       Inventory     @relation(fields: [inventoryId], references: id)
-}
-
-model Weapons {
-  id              Int           @id @default(autoincrement())
-  itemName        String        @unique
-  equipmentId     Int           @unique
-  equipment       Equipment     @relation(fields: [equipmentId], references: id)
 }

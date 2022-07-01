@@ -43,25 +43,21 @@ export const startCommand: SlashCommand = {
               id: 0,
             },
           },
-          currency: {
-            create: {
-              id: 0,
-              balance: 0,
-            },
-          },
           activebuffs: {
             create: {
-              id: 0,
+              buffs: JSON.parse(JSON.stringify({})),
             },
           },
           inventory: {
             create: {
               id: 0,
+              items: JSON.parse(JSON.stringify("[]")),
             },
           },
           equipment: {
             create: {
-              id: 0,
+              weapon1: "",
+              weapon2: "",
               head: "",
               neck: "",
               chest: "",

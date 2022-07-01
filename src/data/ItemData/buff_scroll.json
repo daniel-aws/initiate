@@ -1,0 +1,30 @@
+ {
+    "common" : [
+        {
+            "name" : "Common scroll",
+            "description" : "A pretty common scroll.",
+            "boosts": []
+        }
+    ],
+    "uncommon" : [
+        {
+            "name" : "Uncommon scroll",
+            "description" : "A pretty uncommon scroll.",
+            "boosts": []
+        }
+    ],
+    "rare" : [
+        {
+            "name" : "Rare scroll",
+            "description" : "A pretty rare scroll.",
+            "boosts": []
+        }
+    ],
+    "epic" : [
+        {
+            "name" : "Epic scroll",
+            "description" : "A pretty epic scroll.",
+            "boosts": []
+        }
+    ]
+ }
