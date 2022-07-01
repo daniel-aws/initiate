@@ -8,6 +8,16 @@ import { log, logError } from "../utils/logger";
 import { randomItemInObject, randomNumBetweenRange } from "../utils/random";
 import { minDiffBetweenDates, secDiffBetweenDates } from "../utils/timeDiff";
 
+export const advCommand: SlashCommand = {
+  commandInfo: {
+    name: "adv",
+    description: "Sets your character out on an adventure",
+  },
+  executeSlashCommand: async (interaction: CommandInteraction) => {
+    adventureCommand.executeSlashCommand(interaction);
+  },
+};
+
 export const adventureCommand: SlashCommand = {
   commandInfo: {
     name: "adventure",
