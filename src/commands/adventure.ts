@@ -2,7 +2,7 @@ import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
 import { prisma, prismaReadOnly } from "../app";
 import { droptable } from "../config.json";
-import { data } from "../data/loadData";
+import { keyv } from "../data/loadData";
 import { resetAdventureCDJob } from "../routines/adventureCooldown";
 import { log, logError } from "../utils/logger";
 import { randomItemInObject, randomNumBetweenRange } from "../utils/random";
@@ -99,14 +99,11 @@ export const adventureCommand: SlashCommand = {
               adventureDataFile = "adventureMidRollData";
             }
             // Retrieve adventure data
-            type dataObjectKey = keyof typeof data;
-            const adventureData = data[adventureDataFile as dataObjectKey];
+            const adventureData = await keyv.get(adventureDataFile);
             if (adventureData != undefined) {
               const result = randomItemInObject(adventureData);
               // Grab random item from the drop table
-              let item = randomItemInObject(
-                result["lootTable" as dataObjectKey]
-              );
+              let item = randomItemInObject(result["lootTable"]);
 
               let itemAmount = 1;
               let itemName;
@@ -138,10 +135,7 @@ export const adventureCommand: SlashCommand = {
                       "ERROR: ITEM ENTRY IS INVALID, MULTIPLE/NO ITEM NAMES DETECTED"
                     );
                   }
-                  itemRarityTable =
-                    item[itemKeys[0] as dataObjectKey][
-                      "rarity" as dataObjectKey
-                    ];
+                  itemRarityTable = item[itemKeys[0]]["rarity"];
                   item = itemKeys[0];
                 }
                 if (typeof item != "string") {
@@ -165,7 +159,7 @@ export const adventureCommand: SlashCommand = {
                   }
                   // Roll within distribution to get random rarity
                   const rarityTotal = JSON.parse(
-                    JSON.stringify(itemRarityTable["total" as dataObjectKey])
+                    JSON.stringify(itemRarityTable["total"])
                   );
                   const rarityRoll = randomNumBetweenRange(1, rarityTotal);
 
@@ -175,16 +169,14 @@ export const adventureCommand: SlashCommand = {
                   const itemRarityTableKeys = Object.keys(itemRarityTable);
                   for (let i = 0; i < itemRarityTableKeys.length; i++) {
                     const itemRarityTablePlace = JSON.parse(
-                      JSON.stringify(
-                        itemRarityTable[itemRarityTableKeys[i] as dataObjectKey]
-                      )
+                      JSON.stringify(itemRarityTable[itemRarityTableKeys[i]])
                     );
                     if (
                       typeof itemRarityTablePlace == "number" &&
                       itemRarityTableKeys[i] != "total"
                     ) {
                       place += itemRarityTablePlace;
-                      const val = itemRarityTableKeys[i] as dataObjectKey;
+                      const val = itemRarityTableKeys[i];
                       itemRarityTable[val] = place;
                       if (itemRarityTable[val] >= rarityRoll) {
                         itemRarity = itemRarityTableKeys[i];
@@ -193,10 +185,11 @@ export const adventureCommand: SlashCommand = {
                     }
                   }
                   // Retrieve item
-                  const itemData = randomItemInObject(
-                    data[item][itemRarity as dataObjectKey]
-                  );
-                  itemName = itemData.name;
+                  const rarityData = await keyv.get(item);
+                  if (itemRarity != undefined) {
+                    const itemData = randomItemInObject(rarityData[itemRarity]);
+                    itemName = itemData.name;
+                  }
                 }
               }
               if (!foundGold) {
@@ -214,7 +207,7 @@ export const adventureCommand: SlashCommand = {
               });
 
               // Reply with random text
-              const adventureText = result["text" as dataObjectKey];
+              const adventureText = result["text"];
               if (
                 typeof adventureText == "string" &&
                 itemAmount != undefined &&

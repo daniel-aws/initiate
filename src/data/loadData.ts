@@ -1,9 +1,10 @@
 import * as fs from "fs";
 import { glob } from "glob";
+import Keyv from "keyv";
 import * as path from "path";
 import { logError } from "../utils/logger";
 
-const data: any = {};
+const keyv = new Keyv();
 
 export async function loadData() {
   glob("./src/data/**/*.json", function (err, files) {
@@ -21,11 +22,13 @@ export async function loadData() {
         const obj = JSON.parse(fileData);
         if (obj != undefined) {
           const filename = path.basename(file, path.extname(file));
-          data[filename as any] = obj;
+          (async () => {
+            await keyv.set(filename, obj);
+          })();
         }
       });
     });
   });
 }
 
-export { data };
+export { keyv };

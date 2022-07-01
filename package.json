@@ -29,6 +29,7 @@
     "axios": "^0.26.1",
     "discord.js": "^13.8.0",
     "glob": "^8.0.3",
+    "keyv": "^4.3.2",
     "moment": "^2.29.3",
     "node-schedule": "^2.1.0",
     "sqlite3": "^5.0.2"
