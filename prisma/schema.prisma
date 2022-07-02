@@ -18,7 +18,8 @@ model Character {
   inventory       Inventory?
   vault           Vault?
   equipment       Equipment?
-  adventureCD     Boolean
+  runs            Int           @default(1)
+  stamina         Int           @default(1)
 }
 
 model Stats {

@@ -41,7 +41,6 @@ export const startCommand: SlashCommand = {
       await prisma.character.create({
         data: {
           id: userID,
-          adventureCD: false,
           stats: {
             create: {
               id: 0,

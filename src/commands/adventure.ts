@@ -38,7 +38,7 @@ export const adventureCommand: SlashCommand = {
         id: userID,
       },
       select: {
-        adventureCD: true,
+        runs: true,
       },
     });
     // Return instructions for creating a character if there is no character entry
@@ -50,7 +50,7 @@ export const adventureCommand: SlashCommand = {
       );
     } else {
       // If on cooldown, reply that there is cooldown with X time left
-      if (characterData.adventureCD == true) {
+      if (characterData.runs == 0) {
         if (resetAdventureCDJob == null) {
           throw Error(`ERROR: Adventure CD Job is not properly set/created.`);
         } else {
@@ -84,17 +84,20 @@ export const adventureCommand: SlashCommand = {
         });
         if (inventoryData?.items != undefined) {
           let inventoryItems = JSON.parse(JSON.stringify(inventoryData.items));
-          if (inventoryItems.length >= 20) {
+          if (inventoryItems.length >= 10) {
             interaction.reply(
               "Your inventory is full. Please leave a slot open to get rewards from adventures."
             );
           } else {
             // If not on cooldown, retrieve a random droptable/text
 
-            // set boolean for cooldown to true
+            // Reduce runs
+            characterData.runs--;
+
+            // Update on database
             await prisma.character.update({
               where: { id: userID },
-              data: { adventureCD: true },
+              data: { runs: characterData.runs },
             });
 
             // Roll for high, med, or low events

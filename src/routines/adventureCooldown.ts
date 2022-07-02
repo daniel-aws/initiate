@@ -14,10 +14,21 @@ export async function startResetAdventureCDRoutine() {
 }
 
 async function resetAdventureCD() {
-  // Set all user cooldowns to false
-  await prisma.character.updateMany({
-    data: { adventureCD: false },
-  });
+  // Get all character data
+  const characterData = await prisma.character.findMany();
+  // Set new characterdata based on existing
+  await prisma.$transaction(
+    characterData.map((character) =>
+      prisma.character.upsert({
+        where: { id: character.id },
+        update: {
+          runs: character.stamina,
+        },
+        create: { id: character.id },
+      })
+    )
+  );
+
   console.log("Adventurer cooldowns reset on DB.");
   try {
     const channel = client.channels.cache.get(settings.messageChannelID);
