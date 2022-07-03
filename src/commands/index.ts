@@ -10,6 +10,7 @@ import { pingCommand } from "./ping";
 import { settingsCommand } from "./settings";
 import { showInvCommand, showInventoryCommand } from "./showInventory";
 import { startCommand } from "./start";
+import { trashCommand } from "./trash";
 import { unequipCommand } from "./unequip";
 
 export interface SlashCommand {
@@ -29,6 +30,7 @@ export const commands: Record<string, SlashCommand> = {
   [helpCommand.commandInfo.name]: helpCommand,
   [equipCommand.commandInfo.name]: equipCommand,
   [unequipCommand.commandInfo.name]: unequipCommand,
+  [trashCommand.commandInfo.name]: trashCommand,
   [settingsCommand.commandInfo.name]: settingsCommand,
   [showInventoryCommand.commandInfo.name]: showInventoryCommand,
   [showInvCommand.commandInfo.name]: showInvCommand,
