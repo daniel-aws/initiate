@@ -10,6 +10,7 @@ import { pingCommand } from "./ping";
 import { settingsCommand } from "./settings";
 import { showInvCommand, showInventoryCommand } from "./showInventory";
 import { startCommand } from "./start";
+import { unequipCommand } from "./unequip";
 
 export interface SlashCommand {
   commandInfo: RESTPostAPIApplicationCommandsJSONBody;
@@ -27,6 +28,7 @@ export const commands: Record<string, SlashCommand> = {
   [startCommand.commandInfo.name]: startCommand,
   [helpCommand.commandInfo.name]: helpCommand,
   [equipCommand.commandInfo.name]: equipCommand,
+  [unequipCommand.commandInfo.name]: unequipCommand,
   [settingsCommand.commandInfo.name]: settingsCommand,
   [showInventoryCommand.commandInfo.name]: showInventoryCommand,
   [showInvCommand.commandInfo.name]: showInvCommand,
