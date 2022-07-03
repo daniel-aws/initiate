@@ -3,7 +3,27 @@
         {
             "name" : "Common Sword",
             "description" : "A pretty common sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Common Two-Handed Sword",
+            "description" : "A pretty common two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Common Shield",
+            "description" : "A pretty common shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -12,7 +32,27 @@
         {
             "name" : "Uncommon Sword",
             "description" : "A pretty uncommon sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Uncommon Two-Handed Sword",
+            "description" : "A pretty uncommon two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Uncommon Shield",
+            "description" : "A pretty uncommon shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -22,6 +62,26 @@
             "name" : "Rare Sword",
             "description" : "A pretty rare sword.",
             "damage type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Rare Two-Handed Sword",
+            "description" : "A pretty rare two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Rare Shield",
+            "description" : "A pretty rare shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -30,7 +90,27 @@
         {
             "name" : "Epic Sword",
             "description" : "A pretty epic sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Epic Two-Handed Sword",
+            "description" : "A pretty epic two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Epic Shield",
+            "description" : "A pretty epic shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -39,7 +119,27 @@
         {
             "name" : "Mythic Sword",
             "description" : "A pretty mythic sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Mythic Two-Handed Sword",
+            "description" : "A pretty mythic two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Mythic Shield",
+            "description" : "A pretty mythic shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -48,7 +148,27 @@
         {
             "name" : "Legendary Sword",
             "description" : "A pretty legendary sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Legendary Two-Handed Sword",
+            "description" : "A pretty legendary two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Legendary Shield",
+            "description" : "A pretty legendary shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }
@@ -57,7 +177,27 @@
         {
             "name" : "Godtier Sword",
             "description" : "A pretty godtier sword.",
-            "damage type" : "slash",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": false,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Godtier Two-Handed Sword",
+            "description" : "A pretty godtier two-handed sword.",
+            "damage_type" : "slash",
+            "slot": 1,
+            "two_handed": true,
+            "boosts": [],
+            "effects": []
+        },
+        {
+            "name" : "Godtier Shield",
+            "description" : "A pretty godtier shield.",
+            "damage_type" : "slash",
+            "slot": 2,
+            "two_handed": false,
             "boosts": [],
             "effects": []
         }

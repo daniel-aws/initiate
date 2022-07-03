@@ -83,7 +83,9 @@ export const adventureCommand: SlashCommand = {
           },
         });
         if (inventoryData?.items != undefined) {
-          let inventoryItems = JSON.parse(JSON.stringify(inventoryData.items));
+          const inventoryItems = JSON.parse(
+            JSON.stringify(inventoryData.items)
+          );
           if (inventoryItems.length >= 10) {
             interaction.reply(
               "Your inventory is full. Please leave a slot open to get rewards from adventures."
@@ -122,6 +124,8 @@ export const adventureCommand: SlashCommand = {
               let itemName;
               let values = [];
               let foundGold = false;
+              let itemRarity;
+              let itemTwoHanded;
               values = inventoryItems;
               // If coins, grab random num coins
               if (item == "gold") {
@@ -138,7 +142,6 @@ export const adventureCommand: SlashCommand = {
                   }
                 }
               } else {
-                let itemRarity;
                 let itemRarityTable: any;
                 // Else if rarity distribution is overridden, use that
                 if (typeof item == "object") {
@@ -202,6 +205,9 @@ export const adventureCommand: SlashCommand = {
                   if (itemRarity != undefined) {
                     const itemData = randomItemInObject(rarityData[itemRarity]);
                     itemName = itemData.name;
+                    if (item == "weapon") {
+                      itemTwoHanded = itemData.two_handed;
+                    }
                   }
                 }
               }
@@ -209,9 +215,15 @@ export const adventureCommand: SlashCommand = {
                 const itemObject = JSON.parse(JSON.stringify({}));
                 itemObject.Name = itemName;
                 itemObject.Amount = itemAmount;
+                itemObject.Type = item;
+                itemObject.Rarity = itemRarity;
+
+                if (itemObject.Type == "weapon") {
+                  itemObject.two_handed = itemTwoHanded;
+                }
+
                 values.push(itemObject);
               }
-              inventoryItems = values;
 
               // Submit to database
               await prisma.inventory.update({

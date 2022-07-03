@@ -60,13 +60,13 @@ model Equipment {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
-  weapon1         String
-  weapon2         String
-  head            String
-  neck            String
-  chest           String
-  legs            String
-  feet            String
-  hands           String
-  cape            String
+  weapon1         Json
+  weapon2         Json
+  head            Json
+  neck            Json
+  chest           Json
+  legs            Json
+  feet            Json
+  hands           Json
+  cape            Json
 }

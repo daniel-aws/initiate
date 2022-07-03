@@ -4,6 +4,7 @@ import {
 } from "discord-api-types/v10";
 import { CommandInteraction, Message } from "discord.js";
 import { advCommand, adventureCommand } from "./adventure";
+import { equipCommand } from "./equip";
 import { helpCommand } from "./help";
 import { pingCommand } from "./ping";
 import { settingsCommand } from "./settings";
@@ -25,6 +26,7 @@ export const commands: Record<string, SlashCommand> = {
   [advCommand.commandInfo.name]: advCommand,
   [startCommand.commandInfo.name]: startCommand,
   [helpCommand.commandInfo.name]: helpCommand,
+  [equipCommand.commandInfo.name]: equipCommand,
   [settingsCommand.commandInfo.name]: settingsCommand,
   [showInventoryCommand.commandInfo.name]: showInventoryCommand,
   [showInvCommand.commandInfo.name]: showInvCommand,
