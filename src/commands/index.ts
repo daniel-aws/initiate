@@ -8,7 +8,7 @@ import { equipCommand } from "./equip";
 import { helpCommand } from "./help";
 import { pingCommand } from "./ping";
 import { settingsCommand } from "./settings";
-import { showInvCommand, showInventoryCommand } from "./showInventory";
+import { invCommand, inventoryCommand } from "./inventory";
 import { startCommand } from "./start";
 
 export interface SlashCommand {
@@ -28,8 +28,8 @@ export const commands: Record<string, SlashCommand> = {
   [helpCommand.commandInfo.name]: helpCommand,
   [equipCommand.commandInfo.name]: equipCommand,
   [settingsCommand.commandInfo.name]: settingsCommand,
-  [showInventoryCommand.commandInfo.name]: showInventoryCommand,
-  [showInvCommand.commandInfo.name]: showInvCommand,
+  [inventoryCommand.commandInfo.name]: inventoryCommand,
+  [invCommand.commandInfo.name]: invCommand,
 };
 
 export function isInteraction(source: CommandInteraction | Message): boolean {

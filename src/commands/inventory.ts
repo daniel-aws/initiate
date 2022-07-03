@@ -2,17 +2,17 @@ import { CommandInteraction, Formatters, MessageEmbed } from "discord.js";
 import { SlashCommand } from ".";
 import { prismaReadOnly } from "../app";
 
-export const showInvCommand: SlashCommand = {
+export const invCommand: SlashCommand = {
   commandInfo: {
     name: "inv",
     description: "Displays your current inventory slots",
   },
   executeSlashCommand: async (interaction: CommandInteraction) => {
-    showInventoryCommand.executeSlashCommand(interaction);
+    inventoryCommand.executeSlashCommand(interaction);
   },
 };
 
-export const showInventoryCommand: SlashCommand = {
+export const inventoryCommand: SlashCommand = {
   commandInfo: {
     name: "inventory",
     description: "Displays your current inventory slots",
