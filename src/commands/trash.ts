@@ -4,14 +4,12 @@ import { prisma, prismaReadOnly } from "../app";
 import { logError } from "../utils/logger";
 
 async function executeDeleteQuery(userID: any, inventoryData: any) {
-  async (_m: any) => {
-    await prisma.inventory.update({
-      where: { characterId: userID },
-      data: {
-        items: inventoryData,
-      },
-    });
-  };
+  await prisma.inventory.update({
+    where: { characterId: userID },
+    data: {
+      items: inventoryData,
+    },
+  });
 }
 
 export const trashCommand: SlashCommand = {
@@ -136,7 +134,6 @@ export const trashCommand: SlashCommand = {
         interaction.channel
           .awaitMessages({ filter, max: 1, time: 10000, errors: ["time"] })
           .then((_collected) => {
-            console.log(inventoryData);
             inventoryData.splice(inventorySlot, 1);
             executeDeleteQuery(userID, inventoryData);
             interaction.followUp(`Item trashed!`);
