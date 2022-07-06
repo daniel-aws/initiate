@@ -4,7 +4,8 @@ import Keyv from "keyv";
 import * as path from "path";
 import { logError } from "../utils/logger";
 
-const keyv = new Keyv();
+const gameData = new Keyv();
+const sessionData = new Keyv();
 
 export async function loadData() {
   glob("./src/data/**/*.json", function (err, files) {
@@ -23,7 +24,7 @@ export async function loadData() {
         if (obj != undefined) {
           const filename = path.basename(file, path.extname(file));
           (async () => {
-            await keyv.set(filename, obj);
+            await gameData.set(filename, obj);
           })();
         }
       });
@@ -31,4 +32,4 @@ export async function loadData() {
   });
 }
 
-export { keyv };
+export { gameData, sessionData };

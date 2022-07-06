@@ -2,7 +2,7 @@ import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
 import { prisma, prismaReadOnly } from "../app";
 import { droptable } from "../config.json";
-import { keyv } from "../data/loadData";
+import { gameData } from "../data/loadData";
 import { resetAdventureCDJob } from "../routines/adventureCooldown";
 import { log, logError } from "../utils/logger";
 import { randomItemInObject, randomNumBetweenRange } from "../utils/random";
@@ -114,7 +114,7 @@ export const adventureCommand: SlashCommand = {
               adventureDataFile = "adventureMidRollData";
             }
             // Retrieve adventure data
-            const adventureData = await keyv.get(adventureDataFile);
+            const adventureData = await gameData.get(adventureDataFile);
             if (adventureData != undefined) {
               const result = randomItemInObject(adventureData);
               // Grab random item from the drop table
@@ -201,7 +201,7 @@ export const adventureCommand: SlashCommand = {
                     }
                   }
                   // Retrieve item
-                  const rarityData = await keyv.get(item);
+                  const rarityData = await gameData.get(item);
                   if (itemRarity != undefined) {
                     const itemData = randomItemInObject(rarityData[itemRarity]);
                     itemName = itemData.name;

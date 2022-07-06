@@ -1,9 +1,13 @@
 import { CacheType, Interaction } from "discord.js";
 import { commands } from "../commands";
+import { submitInstancedAction } from "../routines/gameLoop";
 import { log } from "../utils/logger";
 
 export async function onInteractionCreate(interaction: Interaction<CacheType>) {
   if (!interaction.isCommand()) {
+    if (interaction.isButton()) {
+      submitInstancedAction();
+    }
     return;
   }
   const command = commands[interaction.commandName];

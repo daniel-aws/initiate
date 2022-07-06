@@ -2,7 +2,7 @@ import { Equipment } from "@prisma/client";
 import { CommandInteraction, Formatters } from "discord.js";
 import { SlashCommand } from ".";
 import { prisma, prismaReadOnly } from "../app";
-import { keyv } from "../data/loadData";
+import { gameData } from "../data/loadData";
 import { logError } from "../utils/logger";
 
 export const equipCommand: SlashCommand = {
@@ -108,7 +108,7 @@ export const equipCommand: SlashCommand = {
     }
     // Grab inventory item data
     const inventoryItemRarity = inventoryData[inventorySlot].Rarity;
-    const inventoryItemData = await keyv.get(inventoryItemType);
+    const inventoryItemData = await gameData.get(inventoryItemType);
     let inventoryItem = inventoryItemData[inventoryItemRarity].filter(function (
       obj: any
     ) {
