@@ -20,6 +20,7 @@ model Character {
   equipment       Equipment?
   runs            Int           @default(1)
   stamina         Int           @default(1)
+  inSession       Boolean       @default(false)
 }
 
 model Stats {

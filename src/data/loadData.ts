@@ -5,6 +5,7 @@ import * as path from "path";
 import { logError } from "../utils/logger";
 
 const gameData = new Keyv();
+const guildSessionsData = new Keyv();
 const sessionData = new Keyv();
 
 export async function loadData() {
@@ -32,4 +33,4 @@ export async function loadData() {
   });
 }
 
-export { gameData, sessionData };
+export { gameData, guildSessionsData, sessionData };

@@ -58,6 +58,15 @@ function startLoadData() {
   log("Loaded data.");
 }
 
+async function resetPlayerSessions() {
+  await prisma.character.updateMany({
+    data: { inSession: false },
+  });
+  log("Reset player sessions.");
+}
+
+resetPlayerSessions();
+
 startLoadData();
 
 startEventListeners();

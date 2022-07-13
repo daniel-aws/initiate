@@ -11,3 +11,13 @@ export function randomItemInObject(obj: any): any {
   const result = obj[objectKeys[(objectKeys.length * Math.random()) << 0]];
   return result;
 }
+
+export function makeID(): string {
+  let text = "";
+  const possible = "abcdefghijklmnopqrstuvwxyz";
+
+  for (let i = 0; i < 4; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}

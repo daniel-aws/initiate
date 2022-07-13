@@ -4,6 +4,7 @@ import {
 } from "discord-api-types/v10";
 import { CommandInteraction, Message } from "discord.js";
 import { advCommand, adventureCommand } from "./adventure";
+import { ascendCommand } from "./ascend";
 import { equipCommand } from "./equip";
 import { helpCommand } from "./help";
 import { pingCommand } from "./ping";
@@ -34,6 +35,7 @@ export const commands: Record<string, SlashCommand> = {
   [settingsCommand.commandInfo.name]: settingsCommand,
   [showInventoryCommand.commandInfo.name]: showInventoryCommand,
   [showInvCommand.commandInfo.name]: showInvCommand,
+  [ascendCommand.commandInfo.name]: ascendCommand,
 };
 
 export function isInteraction(source: CommandInteraction | Message): boolean {
