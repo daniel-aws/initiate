@@ -27,10 +27,8 @@ model Stats {
   id              Int           @id @default(autoincrement())
   characterId     String        @unique
   character       Character?    @relation(fields: [characterId], references: id)
-  totalLevel      Int           @default(0)
+  level           Int           @default(0)
   exp             BigInt        @default(0)
-  atkLevel        Int           @default(0)
-  defLevel        Int           @default(0)
   highestClear    Int           @default(0)
   numKills        Int           @default(0)
   numRolls        Int           @default(0)

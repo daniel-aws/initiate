@@ -3,6 +3,7 @@ import * as timer from "timers/promises";
 import { SlashCommand } from ".";
 import { prisma, prismaReadOnly } from "../app";
 import { guildSessionsData, sessionData } from "../data/loadData";
+import { startFloor } from "../routines/gameLoop";
 import { logError } from "../utils/logger";
 import { makeID } from "../utils/random";
 
@@ -173,7 +174,9 @@ export const ascendCommand: SlashCommand = {
       );
       // If new session, starts countdown for starting session
       const wait = timer.setTimeout;
-      await wait(30000);
+      // Wait 30 sec
+      //await wait(30000);
+      await wait(1000);
       channel.send(
         "Lobby " +
           sessionID +
@@ -182,32 +185,7 @@ export const ascendCommand: SlashCommand = {
       );
 
       // Start game loop
+      startFloor(interaction.guildId, sessionID);
     }
-
-    //
-    //
-    //
-    // Set local variables for in-game combat
-
-    // If game has not started and counter reaches 0, start game loop
-
-    // GAME LOOP STARTS HERE********************
-    //    NEW FLOOR CODE:
-    //        Find random boss to add
-    //        Reset some combat variables
-    //        If player is in queue, add them to the game
-    //    COMBAT LOOP:
-    //    Reset action points
-    //    Check for buffs and debuff resets if they ran out
-    //    Calculate order of turns based on speed
-    //    Calculate moves and sequences/attacks in the queue including boss mechanics
-    //    Send all moves/events of the turns in chat
-    //    If all players are dead or disconnected, end game
-    //    If player health reaches 0, give rewards and remove player
-    //    If boss health reaches 0, start new floor
-    //    Calculate and display new combat image
-    //    Poll data from character with 2 min time limit, if time limit is reached player is removed, otherwise add their moves to the queue
-
-    // NOTE* How do we separate the game loop which is player agnostic and the player input portion...?
   },
 };

@@ -1,0 +1,61 @@
+{
+    "FloorData" : [
+        {
+            "type" : "boss",
+            "enemies": 
+            [
+                {
+                    "ImpBoss_1": {
+                        "Base" : 
+                        {
+                            "Level": 25,
+                            "Attack": 24,
+                            "Defense": 24,
+                            "HP": 20,
+                            "Speed": 16
+                        },
+                        "Current": 
+                        {
+                            "Level": 25,
+                            "Attack": 24,
+                            "Defense": 24,
+                            "HP": 20,
+                            "Speed": 16
+                        },
+                        "Buffs": [],
+                        "Moveset": [],
+                        "Current_Action":
+                        {
+                            "source": "",
+                            "target": "",
+                            "action": ""
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type" : "rewards",
+            "rewards": [
+                {
+                    "Name": "Rare Two-Handed Sword", 
+                    "Type": "weapon", 
+                    "Amount": 1, 
+                    "Rarity": "rare", 
+                    "two_handed": true
+                },
+                {
+                    "Name": "gold",
+                    "Type": "gold", 
+                    "Amount": 100
+                },
+                {
+                    "Name": "Common Helmet", 
+                    "Type": "armor", 
+                    "Amount": 1, 
+                    "Rarity": "common"
+                }
+            ]
+        }
+    ]
+}
