@@ -1,7 +1,6 @@
 import { AnyChannel, TextChannel } from "discord.js";
 import { Job, scheduleJob } from "node-schedule";
 import { client, prisma } from "../app";
-import settings from "../settings.json";
 import { logError } from "../utils/logger";
 
 let resetAdventureCDJob: Job;
@@ -31,13 +30,17 @@ async function resetAdventureCD() {
 
   console.log("Adventurer cooldowns reset on DB.");
   try {
-    const channel = client.channels.cache.get(settings.messageChannelID);
+    if (process.env.MESSAGE_CHANNEL_ID == undefined) {
+      logError("MESSAGECHANNELID IS NOT VALID");
+      return;
+    }
+    const channel = client.channels.cache.get(process.env.MESSAGE_CHANNEL_ID);
     if (channel == undefined) {
       logError(
-        "ERROR: messageChannelID in config.json is not a valid/existing channel!"
+        "messageChannelID in config.json is not a valid/existing channel!"
       );
     } else if ((channel as AnyChannel).type != "GUILD_TEXT") {
-      logError("ERROR: messageChannelID in config.json is not a text channel!");
+      logError("messageChannelID in config.json is not a text channel!");
     } else {
       (channel as TextChannel).send("Adventurer cooldowns have been reset!");
     }
